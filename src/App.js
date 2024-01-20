@@ -1,7 +1,8 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./components/Home";
-import About from "./components/About";
+import Home from "./components/pages/Home";
+import About from "./components/pages/About";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -24,20 +25,15 @@ function App() {
     </div>
 =======
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+    <div>
+      <Navbar/>
+      <div className="conatiner">
+        <Routes>
+          <Route path="/home" element={<Home/>}/>
+          <Route path="/about" element={<About/>}/>
+        </Routes>
+      </div>
+    </div>
     </Router>
 >>>>>>> 460919a8f74de827e5bda59dd133ae1a616f4b83
   );
