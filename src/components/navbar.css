@@ -1,0 +1,24 @@
+.nav {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: #dacece;
+    color: white;
+  }
+  
+.profile {
+    max-height: 65px; 
+    width: auto;
+    padding: 10px;
+  }
+
+.ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+.li {
+    margin-right: 20px;
+  }
