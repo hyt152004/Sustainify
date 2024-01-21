@@ -1,0 +1,116 @@
+.homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -100px;
+    margin-bottom: 0px;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .leftside {
+    flex: 1; 
+    padding: 10px;
+  }
+  
+  .title {
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  
+  .Buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 0px;
+  }
+  
+  .character {
+    flex: 1;
+    padding-left: 150px;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: rgb(64, 197, 148);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    padding: 25px;
+    margin-top: 20px;
+  }
+  
+  .button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+  
+  @-webkit-keyframes pulse {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+    }
+  }
+  @-moz-keyframes pulse {
+    0% {
+      -moz-transform: scale3d(1, 1, 1);
+    }
+    50% {
+      -moz-transform: scale3d(1.1, 1.1, 1.1);
+    }
+    100% {
+      -moz-transform: scale3d(1, 1, 1);
+    }
+  }
+  @-o-keyframes pulse {
+    0% {
+      -o-transform: scale3d(1, 1, 1);
+    }
+    50% {
+      -o-transform: scale3d(1.1, 1.1, 1.1);
+    }
+    100% {
+      -o-transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  
+  .u--pulse {
+    padding-left: 150px;
+    -webkit-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+    -moz-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+    -o-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+    animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+  }
+  

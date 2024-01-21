@@ -10,6 +10,7 @@ function Main() {
   ]);
 
   const [challengesButton, setChallengesButton] = useState(false);
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -24,31 +25,29 @@ function Main() {
         {
           role: "system",
           content:
-            "give me 3 one setence eco-friendly challenges accomplisable in one day",
+            "give me 3 one sentence eco-friendly challenges accomplishable in one day",
         },
       ],
       temperature: 0.7,
       top_p: 1,
     };
     try {
-      await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + API_KEY,
         },
         body: JSON.stringify(APIBody),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          setChallenges(
-            data.choices[0].message.content
-              .split(/\d+\.\s+/)
-              .filter((item) => item.trim().length > 0)
-          );
-        });
+      });
+      const data = await response.json();
+
+      setChallenges(
+        data.choices[0].message.content
+          .split(/\d+\.\s+/)
+          .filter((item) => item.trim().length > 0)
+      );
+      setSelectedChallenge(null); // Clear selected challenge when new challenges are generated
     } catch (e) {
       console.log(e);
     }
@@ -78,15 +77,16 @@ function Main() {
         disabled={challengesButton}
         onClick={callopenAIAPI}
       >
-        Generate A Motivation challenges
+        Generate A Motivation Challenge
       </button>
       <div className="challengeButtonContainer">
         {challenges.map((challenge, idx) => (
           <button
             key={idx}
-            className="challengeButton"
+            className={`challengeButton ${idx === selectedChallenge ? 'selected' : ''}`}
             onClick={() => {
               handleRemove(idx);
+              setSelectedChallenge(idx);
             }}
           >
             {challenge}
@@ -96,4 +96,5 @@ function Main() {
     </div>
   );
 }
+
 export default Main;
