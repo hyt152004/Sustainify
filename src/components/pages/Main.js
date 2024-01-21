@@ -82,7 +82,7 @@ function Main() {
         disabled={challengesButton}
         onClick={callopenAIAPI}
       >
-        Generate A Motivation challenges
+        Generate Green Challenges
       </button>
       <div className="challengeButtonContainer">
         {storedChallenges.map((challenge, idx) => (
