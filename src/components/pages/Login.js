@@ -1,31 +1,34 @@
-// Login.js
 import React, { useState } from "react";
+import axios from 'axios';
 
 function Login() {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("http://localhost:8000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      // Assuming you have a server endpoint for user registration (although not needed in this case)
+      const newUser = {
+        id: Date.now(), // Using timestamp as a simple way to generate a unique ID
+        username,
+        "current-challenges": "",
+        "completed-challenges": ""
+      };
 
-      const data = await response.json();
+      // Fetch the existing data from db.json
+      const existingData = await axios.get('http://localhost:3001/db.json');
 
-      if (response.ok) {
-        console.log(data.message);
-        // Handle successful registration, e.g., redirect the user to a login page.
-      } else {
-        console.error(data.error);
-        // Handle registration error, e.g., display an error message to the user.
-      }
+      // Update the data with the new user
+      existingData.data.Users.push(newUser);
+
+      // Write the updated data back to db.json
+      await axios.put('http://localhost:3001/db.json', existingData.data);
+
+      console.log("User registered successfully:", newUser);
+
+      // Optionally, you can perform additional actions on the client-side if needed
+
     } catch (error) {
-      console.error("Error during registration:", error);
+      console.error("Registration failed:", error);
     }
   };
 
@@ -38,14 +41,6 @@ function Login() {
         id="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-      />
-
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
       />
 
       <button onClick={handleRegister}>Register</button>
