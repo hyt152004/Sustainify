@@ -9,12 +9,10 @@ function About() {
       <div className="text-box">
         <h2 className="title">What we strive for?</h2>
         <p className="description">
-          Some description text goes here.adjkfakjdfnkandknf
-          sadkfknakdfnkjasdnfkjnsafkjndnakfjnksndfkjadnskjnf
-          ansdkjfnakjdfnksnfdkajnfkjandksjankjanfkj asdnkjfnsakjfdnkasndfkjands
-          asndkfjanskdjfnskn asndkjfnskdjfnksjdnfkjsdnfksfdnkjsdnfkjsnkfnsdkjf
-          sdfnkjsdnfknafkndkjnwewkjfm,dafn,msdnf,sdfnkjsdnfknafkndkjnwewkjfmasdnfjsnke
-          dsnakjfnkj
+          Sustainify simplifies sustainable living by providing achievable daily
+          goals tailored to your lifestyle. From reducing energy consumption to
+          adopting eco-friendly shopping habits, our app guides you through
+          easy, actionable steps that add up to a significant positive impact.
         </p>
       </div>
       <div className="image-box">
