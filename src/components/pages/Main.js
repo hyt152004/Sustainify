@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./main.css";
+import { ProgressBar } from "react-bootstrap";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
@@ -97,6 +98,7 @@ function Main() {
           </button>
         ))}
       </div>
+      <ProgressBar now={90} label={`2% completed`} animated />
     </div>
   );
 }
