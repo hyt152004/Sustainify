@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function Navb() {
+function NavBar() {
   return (
     // <nav className="nav">
     //   <Link to="/home" className="site-title">
@@ -53,4 +53,4 @@ function Navb() {
 );
 }
 
-export default Navb;
+export default NavBar;
