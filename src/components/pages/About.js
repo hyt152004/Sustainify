@@ -1,23 +1,27 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./about.css";
+import card1 from "../../images/card1.png"
+import card2 from "../../images/card2.png"
+import card3 from "../../images/card3.png"
 import nature from "../../images/earthnature.jpg";
 import earthMelting from "../../images/earth_melting.gif";
 
+
 function About() {
   return (
-    <div className="container">
-      <div className="text-box">
-        <h2 className="title">What we strive for?</h2>
-        <p className="description">
-          Sustainify simplifies sustainable living by providing achievable daily
-          goals tailored to your lifestyle. From reducing energy consumption to
-          adopting eco-friendly shopping habits, our app guides you through
-          easy, actionable steps that add up to a significant positive impact.
-        </p>
-      </div>
-      <div className="image-box">
-        <img src={nature} alt="reference" />
+    <div className="about">
+        <h1>We are...</h1>
+
+    
+      <div className="cards-container">
+
+        <img src={card1} alt="Card 1" className="cards" />
+      
+        <img src={card2} alt="Card 2" className="cards" />
+
+        <img src={card3} alt="Card 3" className="cards" />
+
       </div>
     </div>
   );
