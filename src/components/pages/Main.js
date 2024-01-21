@@ -116,6 +116,16 @@ function Main() {
     );
   }, [selectedChallenges]);
 
+  const calculateProgress = () => {
+    if (storedChallenges.length === 0) {
+      return 0;
+    }
+
+    const progress =
+      (selectedChallenges.length / storedChallenges.length) * 100;
+    return isNaN(progress) ? 0 : progress;
+  };
+
   return (
     <div className="challengeContainer">
       <button
@@ -138,7 +148,11 @@ function Main() {
           </button>
         ))}
       </div>
-      {/* <ProgressBar now={90} label={`2% completed`} animated /> */}
+      <ProgressBar
+        now={calculateProgress()} // Use the dynamic progress value
+        label={`${calculateProgress()}% completed`}
+        animated
+      />
     </div>
   );
 }
