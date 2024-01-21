@@ -114,4 +114,22 @@
     -o-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
   }
-  
+  /* home.css */
+
+/* Your existing styles */
+
+.u--pulse {
+  position: relative;
+}
+
+.character {
+  width: 100%; /* Set the character's width to 100% of the parent container */
+  height: auto; /* Maintain the aspect ratio of the character */
+}
+
+/* Media query for smaller screens (adjust the max-width value based on your needs) */
+@media only screen and (max-width: 768px) {
+  .character {
+    max-width: 80%; /* Limit the character's width for smaller screens */
+  }
+}

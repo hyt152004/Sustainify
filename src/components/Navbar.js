@@ -8,11 +8,6 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function NavBar() {
   return (
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> 6d7ed1ddd6a4427176c06abdeba910f148d1f44e
 <Navbar bg="light" data-bs-theme="light">
 <Container class="d-flex justify-content-between align-items-center">
 <Link to="/home" className="site-title me-5">
