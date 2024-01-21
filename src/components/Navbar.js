@@ -42,7 +42,7 @@ function Navb() {
     <Nav.Link href="tohome" class="me-5">Home</Nav.Link>
     </Link>
     <Link to="/about">
-    <Nav.Link href="#about" className="aboutUs ps-5">About Us</Nav.Link>
+    <Nav.Link href="#about" className="aboutus ps-5">About Us</Nav.Link>
     </Link>
     <Link to="/main">
     <Nav.Link href="#main " className="main ps-5">Main</Nav.Link>
