@@ -1,23 +1,42 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./main.css";
+import { ProgressBar } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
 function Main() {
-  const [challenges, setChallenges] = useState([
-    "question1",
-    "question2",
-    "questions3",
-  ]);
-
   const [challengesButton, setChallengesButton] = useState(false);
-  const [selectedChallenges, setSelectedChallenges] = useState([]);
-  const [completedChallenges, setCompletedChallenges] = useState([]);
+  const [storedChallenges, setStoredChallenges] = useState(
+    JSON.parse(localStorage.getItem("challenges")) || []
+  );
+  const [selectedChallenges, setSelectedChallenges] = useState(
+    JSON.parse(localStorage.getItem("selectedChallenges")) || []
+  );
+
+  useEffect(() => {
+    const storedChallengesData = localStorage.getItem("challenges");
+    if (storedChallengesData) {
+      try {
+        setStoredChallenges(JSON.parse(storedChallengesData));
+      } catch (error) {
+        console.error("Error parsing storedChallengesData:", error);
+      }
+    }
+
+    const selectedChallengesData = localStorage.getItem("selectedChallenges");
+    if (selectedChallengesData) {
+      try {
+        setSelectedChallenges(JSON.parse(selectedChallengesData));
+      } catch (error) {
+        console.error("Error parsing selectedChallengesData:", error);
+      }
+    }
+  }, []);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
   async function callopenAIAPI() {
-    // user will not be able to press the challenges Button
     setChallengesButton(true);
+
     challengesButtonTimer();
 
     const APIBody = {
@@ -32,25 +51,38 @@ function Main() {
       temperature: 0.7,
       top_p: 1,
     };
+
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + API_KEY,
-        },
-        body: JSON.stringify(APIBody),
-      });
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + API_KEY,
+          },
+          body: JSON.stringify(APIBody),
+        }
+      );
+
       const data = await response.json();
 
-      setChallenges(
-        data.choices[0].message.content
-          .split(/\d+\.\s+/)
-          .filter((item) => item.trim().length > 0)
-      );
-      setSelectedChallenges([]); 
+      const newChallenges = data.choices[0].message.content
+        .split(/\d+\.\s+/)
+        .filter((item) => item.trim().length > 0);
+
+      localStorage.setItem("challenges", JSON.stringify(newChallenges));
+      setStoredChallenges(newChallenges);
+      // Reset selected challenges and update localStorage
+      setSelectedChallenges([]);
+      localStorage.setItem("selectedChallenges", "[]");
+
+      // Reset the styles of buttons
+      document.querySelectorAll(".challengeButton").forEach((button) => {
+        button.classList.remove("selected");
+      });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -65,25 +97,24 @@ function Main() {
     }, 1000);
   };
 
-  const handleToggleSelect = (idx) => {
-    const isSelected = selectedChallenges.includes(idx);
-    if (isSelected && !completedChallenges.includes(idx)) {
-      // Mark as completed if not already completed
-      setCompletedChallenges([...completedChallenges, idx]);
-    }
-    if (!isSelected) {
+  const handleComplete = (idx) => {
+    if (!selectedChallenges.includes(idx)) {
       setSelectedChallenges([...selectedChallenges, idx]);
     }
   };
 
-  const handleMarkIncomplete = (idx) => {
-    const isSelected = selectedChallenges.includes(idx);
-    if (isSelected) {
-      setSelectedChallenges(selectedChallenges.filter((selectedIdx) => selectedIdx !== idx));
-    } else {
-      setSelectedChallenges([...selectedChallenges, idx]);
-    }
+  const dynamicClassName = (idx) => {
+    return selectedChallenges.includes(idx)
+      ? `challengeButton selected`
+      : `challengeButton`;
   };
+
+  useEffect(() => {
+    localStorage.setItem(
+      "selectedChallenges",
+      JSON.stringify(selectedChallenges)
+    );
+  }, [selectedChallenges]);
 
   return (
     <div className="challengeContainer">
@@ -92,24 +123,22 @@ function Main() {
         disabled={challengesButton}
         onClick={callopenAIAPI}
       >
-        Generate A Motivation Challenge
+        Generate Green Challenges
       </button>
       <div className="challengeButtonContainer">
-        {challenges.map((challenge, idx) => (
-          <div key={idx} className="challengeButtonContainer">
-            <button
-              className={`challengeButton ${
-                selectedChallenges.includes(idx) ? "selected" : ""
-              } ${completedChallenges.includes(idx) ? "completed" : ""}`}
-              onClick={() => handleToggleSelect(idx)}
-            >
-              {challenge}
-            </button>
-            <button onClick={() => handleMarkIncomplete(idx)}>Mark as Incomplete</button>
-          </div>
+        {storedChallenges.map((challenge, idx) => (
+          <button
+            key={uuidv4()}
+            className={dynamicClassName(idx)}
+            onClick={() => {
+              handleComplete(idx);
+            }}
+          >
+            {challenge}
+          </button>
         ))}
       </div>
-      <div className="mark-incomplete"></div>
+      {/* <ProgressBar now={90} label={`2% completed`} animated /> */}
     </div>
   );
 }
