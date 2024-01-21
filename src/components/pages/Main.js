@@ -1,19 +1,42 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./main.css";
 import { ProgressBar } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
-  const storedChallenges = JSON.parse(localStorage.getItem("challenges")) || [];
+  const [storedChallenges, setStoredChallenges] = useState(
+    JSON.parse(localStorage.getItem("challenges")) || []
+  );
+  const [selectedChallenges, setSelectedChallenges] = useState(
+    JSON.parse(localStorage.getItem("selectedChallenges")) || []
+  );
 
-  // console.log(JSON.stringify(["question1", "question2"]));
+  useEffect(() => {
+    const storedChallengesData = localStorage.getItem("challenges");
+    if (storedChallengesData) {
+      try {
+        setStoredChallenges(JSON.parse(storedChallengesData));
+      } catch (error) {
+        console.error("Error parsing storedChallengesData:", error);
+      }
+    }
+
+    const selectedChallengesData = localStorage.getItem("selectedChallenges");
+    if (selectedChallengesData) {
+      try {
+        setSelectedChallenges(JSON.parse(selectedChallengesData));
+      } catch (error) {
+        console.error("Error parsing selectedChallengesData:", error);
+      }
+    }
+  }, []);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
   async function callopenAIAPI() {
-    // user will not be able to press the challenges Button
     setChallengesButton(true);
+
     challengesButtonTimer();
 
     const APIBody = {
@@ -22,40 +45,47 @@ function Main() {
         {
           role: "system",
           content:
-            "give me 3 one setence eco-friendly challenges accomplisable in one day",
+            "give me 3 one sentence eco-friendly challenges accomplishable in one day",
         },
       ],
       temperature: 0.7,
       top_p: 1,
     };
+
     try {
-      await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + API_KEY,
-        },
-        body: JSON.stringify(APIBody),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          localStorage.setItem(
-            "challenges",
-            JSON.stringify(
-              data.choices[0].message.content
-                .split(/\d+\.\s+/)
-                .filter((item) => item.trim().length > 0)
-            )
-          );
-        });
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + API_KEY,
+          },
+          body: JSON.stringify(APIBody),
+        }
+      );
+
+      const data = await response.json();
+
+      const newChallenges = data.choices[0].message.content
+        .split(/\d+\.\s+/)
+        .filter((item) => item.trim().length > 0);
+
+      localStorage.setItem("challenges", JSON.stringify(newChallenges));
+      setStoredChallenges(newChallenges);
+      // Reset selected challenges and update localStorage
+      setSelectedChallenges([]);
+      localStorage.setItem("selectedChallenges", "[]");
+
+      // Reset the styles of buttons
+      document.querySelectorAll(".challengeButton").forEach((button) => {
+        button.classList.remove("selected");
+      });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
-  // counts to 10 and after setChallengesButton(false)
   const challengesButtonTimer = () => {
     var timer = 10;
     const interval = setInterval(() => {
@@ -67,14 +97,24 @@ function Main() {
     }, 1000);
   };
 
-  const handleRemove = (idx) => {
-    localStorage.setItem(
-      "challenges",
-      JSON.parse(localStorage.getItem("challenges")).filter(
-        (_, index) => index !== idx
-      )
-    );
+  const handleComplete = (idx) => {
+    if (!selectedChallenges.includes(idx)) {
+      setSelectedChallenges([...selectedChallenges, idx]);
+    }
   };
+
+  const dynamicClassName = (idx) => {
+    return selectedChallenges.includes(idx)
+      ? `challengeButton selected`
+      : `challengeButton`;
+  };
+
+  useEffect(() => {
+    localStorage.setItem(
+      "selectedChallenges",
+      JSON.stringify(selectedChallenges)
+    );
+  }, [selectedChallenges]);
 
   return (
     <div className="challengeContainer">
@@ -88,18 +128,19 @@ function Main() {
       <div className="challengeButtonContainer">
         {storedChallenges.map((challenge, idx) => (
           <button
-            key={idx}
-            className="challengeButton"
+            key={uuidv4()}
+            className={dynamicClassName(idx)}
             onClick={() => {
-              handleRemove(idx);
+              handleComplete(idx);
             }}
           >
             {challenge}
           </button>
         ))}
       </div>
-      <ProgressBar now={90} label={`2% completed`} animated />
+      {/* <ProgressBar now={90} label={`2% completed`} animated /> */}
     </div>
   );
 }
+
 export default Main;

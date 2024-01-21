@@ -47,7 +47,14 @@
   margin: 10px;
 }
 
+
 .challengeButton:hover {
   background-color: #45a049;
   transform: scale(1.05);
 }
+
+.challengeButton.selected {
+  background-color: black; 
+  color: #fff; /* White text for selected button */
+}
+
