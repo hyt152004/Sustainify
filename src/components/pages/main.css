@@ -1,16 +1,10 @@
 /* main.css */
-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
 
 .challengeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 
 .challengeGeneratorButton {
@@ -70,3 +64,27 @@ container {
   margin-top: 20px;
   text-align: center;
 }
+
+.ProgressBarContainer {
+  width: 100%;
+  margin-top: 10px; 
+  text-align: center; 
+}
+.progressbar {
+  width: 80%; 
+  margin: 20px auto; 
+}
+
+.progressBar {
+  height: 20px; 
+  border-radius: 5px; 
+}
+
+.ProgressBar-label {
+  font-size: 14px; 
+  color: #555;
+  margin-top: 5px; 
+}
+
+
+
