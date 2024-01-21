@@ -10,7 +10,8 @@ function Main() {
   ]);
 
   const [challengesButton, setChallengesButton] = useState(false);
-  const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [selectedChallenges, setSelectedChallenges] = useState([]);
+  const [completedChallenges, setCompletedChallenges] = useState([]);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -47,7 +48,7 @@ function Main() {
           .split(/\d+\.\s+/)
           .filter((item) => item.trim().length > 0)
       );
-      setSelectedChallenge(null); // Clear selected challenge when new challenges are generated
+      setSelectedChallenges([]); // Clear selected challenges when new challenges are generated
     } catch (e) {
       console.log(e);
     }
@@ -65,10 +66,25 @@ function Main() {
     }, 1000);
   };
 
-  const handleRemove = (idx) => {
-    const challengeRemoved = challenges.filter((_, index) => index !== idx);
-    setChallenges(challengeRemoved);
+  const handleToggleSelect = (idx) => {
+    const isSelected = selectedChallenges.includes(idx);
+    if (isSelected && !completedChallenges.includes(idx)) {
+      // Mark as completed if not already completed
+      setCompletedChallenges([...completedChallenges, idx]);
+    }
+    if (!isSelected) {
+      setSelectedChallenges([...selectedChallenges, idx]);
+    }
   };
+
+  // const handleMarkIncomplete = (idx) => {
+  //   const isSelected = selectedChallenges.includes(idx);
+  //   if (isSelected) {
+  //     setSelectedChallenges(selectedChallenges.filter((selectedIdx) => selectedIdx !== idx));
+  //   } else {
+  //     setSelectedChallenges([...selectedChallenges, idx]);
+  //   }
+  // };
 
   return (
     <div className="challengeContainer">
@@ -81,16 +97,17 @@ function Main() {
       </button>
       <div className="challengeButtonContainer">
         {challenges.map((challenge, idx) => (
-          <button
-            key={idx}
-            className={`challengeButton ${idx === selectedChallenge ? 'selected' : ''}`}
-            onClick={() => {
-              handleRemove(idx);
-              setSelectedChallenge(idx);
-            }}
-          >
-            {challenge}
-          </button>
+          <div key={idx} className="challengeButtonContainer">
+            <button
+              className={`challengeButton ${
+                selectedChallenges.includes(idx) ? "selected" : ""
+              } ${completedChallenges.includes(idx) ? "completed" : ""}`}
+              onClick={() => handleToggleSelect(idx)}
+            >
+              {challenge}
+            </button>
+            {/* <button onClick={() => handleMarkIncomplete(idx)}>Mark as Incomplete</button> */}
+          </div>
         ))}
       </div>
     </div>

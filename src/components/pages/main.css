@@ -53,7 +53,7 @@
 }
 
 .challengeButton.selected {
-  background-color: #4caf50; 
+  background-color: black; 
   color: #fff; /* White text for selected button */
 }
 
