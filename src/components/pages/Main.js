@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./main.css";
 import { ProgressBar } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import incomplete from "../../images/earth_melting.gif"
-import completeEarth from "../../images/card2.png"
+import earthHealthy from "../../images/earth_healthy.gif";
+import earthUnhealthy from "../../images/earth_unhealthy.gif";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
@@ -14,6 +14,8 @@ function Main() {
   const [selectedChallenges, setSelectedChallenges] = useState(
     JSON.parse(localStorage.getItem("selectedChallenges")) || []
   );
+
+  const [earthState, setEarthState] = useState(earthUnhealthy);
 
   useEffect(() => {
     const storedChallengesData = localStorage.getItem("challenges");
@@ -79,7 +81,7 @@ function Main() {
       // Reset selected challenges and update localStorage
       setSelectedChallenges([]);
       localStorage.setItem("selectedChallenges", "[]");
-      setComplete(false);
+      setEarthState(earthUnhealthy);
 
       // Reset the styles of buttons
       document.querySelectorAll(".challengeButton").forEach((button) => {
@@ -102,6 +104,7 @@ function Main() {
   };
 
   const handleComplete = (idx) => {
+    checkEarthState();
     if (!selectedChallenges.includes(idx)) {
       setSelectedChallenges([...selectedChallenges, idx]);
     }
@@ -133,6 +136,14 @@ function Main() {
     return isNaN(progress) ? 0 : progress;
   };
 
+  const checkEarthState = () => {
+    if (selectedChallenges.length >= 2) {
+      setEarthState(earthHealthy);
+    } else {
+      setEarthState(earthUnhealthy);
+    }
+  };
+
   return (
     <div className="challengeContainer">
       <button
@@ -160,15 +171,7 @@ function Main() {
         label={`${calculateProgress()}% completed`}
         animated
       />
-      {complete ? (
-        <div className="gif-earth-complete">
-          <img src={completeEarth} alt="Completed Earth Gif" />
-        </div>
-      ) : (
-        <div className="gif-earth-incomplete">
-          <img src={incomplete}alt="Incomplete Earth Gif" />
-        </div>
-      )}
+      <img src={earthState} alt="character" className="img-fluid" />
     </div>
   );
 }
