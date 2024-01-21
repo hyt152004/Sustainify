@@ -27,7 +27,7 @@ padding: 0;
 } */
 
 
-a {
+Nav.Link {
   text-decoration: none;  
   font-family: sans-serif;
 }
