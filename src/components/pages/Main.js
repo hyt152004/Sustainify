@@ -128,7 +128,10 @@ function Main() {
       return 0;
     }
 
-    const progress = ((selectedChallenges.length / storedChallenges.length) * 100).toFixed(0);
+    const progress = (
+      (selectedChallenges.length / storedChallenges.length) *
+      100
+    ).toFixed(0);
     if (progress === 100 && !complete) {
       setComplete(true);
     }
@@ -171,11 +174,18 @@ function Main() {
           now={calculateProgress()}
           label={`${calculateProgress()}%`}
           variant="success"
-          style={{ height: '20px', borderRadius: '8px' }}
+          style={{ height: "20px", borderRadius: "8px" }}
         />
-
       </div>
-      <img src={earthState} alt="character" width={500} className="img-fluid" />
+
+      <div style={{ marginTop: "-60px" }}>
+        <img
+          src={earthState}
+          alt="character"
+          width={500}
+          className="img-fluid"
+        />
+      </div>
     </div>
   );
 }

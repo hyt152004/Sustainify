@@ -2,9 +2,9 @@ import React from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
 import char from "../../images/avatar.png";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Home() {
   return (
@@ -28,7 +28,10 @@ function Home() {
               </div>
             </div>
           </Col>
-          <Col md={6} className="d-flex justify-content-center align-items-center">
+          <Col
+            md={6}
+            className="d-flex justify-content-center align-items-center"
+          >
             <div className="u--pulse">
               <img src={char} alt="character" className="img-fluid" />
             </div>
