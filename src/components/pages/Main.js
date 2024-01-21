@@ -2,7 +2,11 @@ import React from "react";
 import { useState } from "react";
 
 function Main() {
-  const [challenges, setChallenges] = useState([]);
+  const [challenges, setChallenges] = useState([
+    "question1",
+    "question2",
+    "questions3",
+  ]);
 
   const [challengesButton, setChallengesButton] = useState(false);
 
@@ -61,22 +65,25 @@ function Main() {
     }, 1000);
   };
 
+  const handleRemove = (idx) => {
+    const challengeRemoved = challenges.filter((_, index) => index !== idx);
+    setChallenges(challengeRemoved);
+  };
+
   return (
     <div>
       <button disabled={challengesButton} onClick={callopenAIAPI}>
         Generate A Motivation challenges
       </button>
-      {challenges.map((day, idx) => (
+      {challenges.map((challenge, idx) => (
         <div key={idx}>
-          {/* <Link key={idx} to="/about"> */}
           <button
-          // onClick={() => {
-          //   handleDayButton(idx);
-          // }}
+            onClick={() => {
+              handleRemove(idx);
+            }}
           >
-            {day}
+            {challenge}
           </button>
-          {/* </Link> */}
         </div>
       ))}
     </div>
