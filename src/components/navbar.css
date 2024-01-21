@@ -15,6 +15,7 @@
 
 .site-title:hover {
   color: #ffd700; 
+  text-decoration: none;
 }
 
 
@@ -45,6 +46,6 @@ a {
 }
 
 a:hover {
-  color: #ffd700; 
-
+  color: #ffff70; 
+  text-decoration: none;
 }

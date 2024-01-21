@@ -8,6 +8,9 @@ import earthUnhealthy from "../../images/earth_unhealthy.gif";
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
   const [complete, setComplete] = useState(false);
+  const [numberOfDaysCompleted, setNumberOfDaysCompleted] = useState(
+    parseInt(localStorage.getItem("numberOfDaysCompleted")) || 0
+  );
   const [storedChallenges, setStoredChallenges] = useState(
     JSON.parse(localStorage.getItem("challenges")) || []
   );
@@ -39,9 +42,8 @@ function Main() {
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
-  async function callopenAIAPI() {
+  const callopenAIAPI = async () => {
     setChallengesButton(true);
-
     challengesButtonTimer();
 
     const APIBody = {
@@ -78,6 +80,7 @@ function Main() {
 
       localStorage.setItem("challenges", JSON.stringify(newChallenges));
       setStoredChallenges(newChallenges);
+
       // Reset selected challenges and update localStorage
       setSelectedChallenges([]);
       localStorage.setItem("selectedChallenges", "[]");
@@ -90,7 +93,7 @@ function Main() {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   const challengesButtonTimer = () => {
     var timer = 10;
@@ -105,9 +108,27 @@ function Main() {
 
   const handleComplete = (idx) => {
     checkEarthState();
+  
     if (!selectedChallenges.includes(idx)) {
       setSelectedChallenges([...selectedChallenges, idx]);
+  
+      // Increase the number of days completed when all 3 challenges are completed
+      if (selectedChallenges.length + 1 === 3) {
+  
+        // Update the number of days completed (increase by 1)
+        setNumberOfDaysCompleted((prevDays) => prevDays + 1);
+        localStorage.setItem(
+          "numberOfDaysCompleted",
+          JSON.stringify(numberOfDaysCompleted + 1)
+        );
+      }
     }
+  };
+  
+
+  const calculatedTo100DaysCompleted = () => {
+    // Calculate the percentage of days completed out of 100
+    return (numberOfDaysCompleted / 100) * 100;
   };
 
   const dynamicClassName = (idx) => {
@@ -173,9 +194,14 @@ function Main() {
           variant="success"
           style={{ height: '20px', borderRadius: '8px' }}
         />
-
+        <ProgressBar
+          now={calculatedTo100DaysCompleted()}
+          label={`${calculatedTo100DaysCompleted()}%`}
+          variant="success"
+          style={{ height: '20px', borderRadius: '8px', marginTop: '10px' }}
+        />
       </div>
-      <img src={earthState} alt="character" width={500} className="img-fluid" />
+      <img src={earthState} alt="character" width={400} className="img-fluid" />
     </div>
   );
 }
