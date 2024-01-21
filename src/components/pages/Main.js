@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import "./main.css";
 
 function Main() {
   const [challenges, setChallenges] = useState([
@@ -71,21 +72,27 @@ function Main() {
   };
 
   return (
-    <div>
-      <button disabled={challengesButton} onClick={callopenAIAPI}>
+    <div className="challengeContainer">
+      <button
+        className="challengeGeneratorButton"
+        disabled={challengesButton}
+        onClick={callopenAIAPI}
+      >
         Generate A Motivation challenges
       </button>
-      {challenges.map((challenge, idx) => (
-        <div key={idx}>
+      <div className="challengeButtonContainer">
+        {challenges.map((challenge, idx) => (
           <button
+            key={idx}
+            className="challengeButton"
             onClick={() => {
               handleRemove(idx);
             }}
           >
             {challenge}
           </button>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
