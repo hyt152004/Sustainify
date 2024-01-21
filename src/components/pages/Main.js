@@ -3,13 +3,10 @@ import { useState } from "react";
 import "./main.css";
 
 function Main() {
-  const [challenges, setChallenges] = useState([
-    "question1",
-    "question2",
-    "questions3",
-  ]);
-
   const [challengesButton, setChallengesButton] = useState(false);
+  const storedChallenges = JSON.parse(localStorage.getItem("challenges")) || [];
+
+  // console.log(JSON.stringify(["question1", "question2"]));
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -43,10 +40,13 @@ function Main() {
           return data.json();
         })
         .then((data) => {
-          setChallenges(
-            data.choices[0].message.content
-              .split(/\d+\.\s+/)
-              .filter((item) => item.trim().length > 0)
+          localStorage.setItem(
+            "challenges",
+            JSON.stringify(
+              data.choices[0].message.content
+                .split(/\d+\.\s+/)
+                .filter((item) => item.trim().length > 0)
+            )
           );
         });
     } catch (e) {
@@ -67,8 +67,12 @@ function Main() {
   };
 
   const handleRemove = (idx) => {
-    const challengeRemoved = challenges.filter((_, index) => index !== idx);
-    setChallenges(challengeRemoved);
+    localStorage.setItem(
+      "challenges",
+      JSON.parse(localStorage.getItem("challenges")).filter(
+        (_, index) => index !== idx
+      )
+    );
   };
 
   return (
@@ -81,7 +85,7 @@ function Main() {
         Generate A Motivation challenges
       </button>
       <div className="challengeButtonContainer">
-        {challenges.map((challenge, idx) => (
+        {storedChallenges.map((challenge, idx) => (
           <button
             key={idx}
             className="challengeButton"
