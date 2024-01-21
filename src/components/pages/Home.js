@@ -11,7 +11,7 @@ function Home() {
     <Container>
       <div className="homepage">
         <Row>
-          <Col md={5}>
+          <Col md={6}>
             <div className="leftside">
               <div className="title">
                 <ul className="titleUL">Set your goal,</ul>
@@ -32,7 +32,6 @@ function Home() {
             md={6}
             className="d-flex justify-content-center align-items-center"
           >
-            <div className="emptySpace"></div>
             <div className="u--pulse">
               <img src={char} alt="character" className="img-fluid" />
             </div>
