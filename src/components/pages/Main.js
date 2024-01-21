@@ -2,15 +2,16 @@ import React from "react";
 import { useState } from "react";
 
 function Main() {
-  const [quote, setQuote] = useState("");
-  const [quoteButton, setQuoteButton] = useState(false);
+  const [challenges, setChallenges] = useState([]);
+
+  const [challengesButton, setChallengesButton] = useState(false);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
   async function callopenAIAPI() {
-    // user will not be able to press the Quote Button
-    setQuoteButton(true);
-    quoteButtonTimer();
+    // user will not be able to press the challenges Button
+    setChallengesButton(true);
+    challengesButtonTimer();
 
     const APIBody = {
       model: "gpt-3.5-turbo",
@@ -18,7 +19,7 @@ function Main() {
         {
           role: "system",
           content:
-            "give me five different eco-friendly challenges accomplishable in a day",
+            "give me 3 one setence eco-friendly challenges accomplisable in one day",
         },
       ],
       temperature: 0.7,
@@ -37,20 +38,24 @@ function Main() {
           return data.json();
         })
         .then((data) => {
-          setQuote(data.choices[0].message.content);
+          setChallenges(
+            data.choices[0].message.content
+              .split(/\d+\.\s+/)
+              .filter((item) => item.trim().length > 0)
+          );
         });
     } catch (e) {
       console.log(e);
     }
   }
 
-  // counts to 10 and after setQuoteButton(false)
-  const quoteButtonTimer = () => {
+  // counts to 10 and after setChallengesButton(false)
+  const challengesButtonTimer = () => {
     var timer = 10;
     const interval = setInterval(() => {
       timer--;
       if (timer < 0) {
-        setQuoteButton(false);
+        setChallengesButton(false);
         clearInterval(interval);
       }
     }, 1000);
@@ -58,10 +63,22 @@ function Main() {
 
   return (
     <div>
-      <p>{quote}</p>
-      <button disabled={quoteButton} onClick={callopenAIAPI}>
-        Generate A Motivation Quote
+      <button disabled={challengesButton} onClick={callopenAIAPI}>
+        Generate A Motivation challenges
       </button>
+      {challenges.map((day, idx) => (
+        <div key={idx}>
+          {/* <Link key={idx} to="/about"> */}
+          <button
+          // onClick={() => {
+          //   handleDayButton(idx);
+          // }}
+          >
+            {day}
+          </button>
+          {/* </Link> */}
+        </div>
+      ))}
     </div>
   );
 }
