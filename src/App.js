@@ -4,14 +4,14 @@ import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import Navbar from "./components/Navbar";
 import Main from "./components/pages/Main";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <Router>
       <div>
         <Navbar />
-        <div className="conatiner">
+        <div className="container">
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
