@@ -1,0 +1,53 @@
+
+
+.challengeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.challengeGeneratorButton {
+  background-color: #07690b;
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Slightly increase the border radius for a distinct look */
+  padding: 20px 25px; /* Increase padding for a bigger button */
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  width: 320px; /* Increase width for a bigger button */
+  text-align: center;
+  font-size: 18px; /* Slightly increase font size for better visibility */
+}
+
+.challengeGeneratorButton:hover {
+  background-color: #07690b;
+  transform: scale(1.05);
+}
+
+.challengeButtonContainer {
+  flex-direction: row;
+}
+
+
+.challengeButton {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  width: 300px;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px;
+}
+
+.challengeButton:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
