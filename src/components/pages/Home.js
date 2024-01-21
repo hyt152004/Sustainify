@@ -11,12 +11,12 @@ function Home() {
     <Container>
       <div className="homepage">
         <Row>
-          <Col md={5}>
+          <Col md={6}>
             <div className="leftside">
               <div className="title">
-                <ul>Set your goal,</ul>
-                <ul>Do your work,</ul>
-                <ul>Save the Earth</ul>
+                <ul className="titleUL">Set your goal,</ul>
+                <ul className="titleUL">Do your work,</ul>
+                <ul className="titleUL">Save the Earth</ul>
               </div>
               <div className="Buttons">
                 <Link to="/main" className="button">
@@ -28,7 +28,7 @@ function Home() {
               </div>
             </div>
           </Col>
-          <Col md={6} mdOffset={50} className="d-flex justify-content-center align-items-center">
+          <Col md={6} className="d-flex justify-content-center align-items-center">
             <div className="u--pulse">
               <img src={char} alt="character" className="img-fluid" />
             </div>
@@ -40,5 +40,3 @@ function Home() {
 }
 
 export default Home;
-
-
