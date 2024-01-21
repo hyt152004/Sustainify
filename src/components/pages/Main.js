@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./main.css";
 import { ProgressBar } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import earthHealthy from "../../images/earth_healthy.gif";
+import earthUnhealthy from "../../images/earth_unhealthy.gif";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
@@ -11,6 +13,8 @@ function Main() {
   const [selectedChallenges, setSelectedChallenges] = useState(
     JSON.parse(localStorage.getItem("selectedChallenges")) || []
   );
+
+  const [earthState, setEarthState] = useState(earthUnhealthy);
 
   useEffect(() => {
     const storedChallengesData = localStorage.getItem("challenges");
@@ -76,6 +80,7 @@ function Main() {
       // Reset selected challenges and update localStorage
       setSelectedChallenges([]);
       localStorage.setItem("selectedChallenges", "[]");
+      setEarthState(earthUnhealthy);
 
       // Reset the styles of buttons
       document.querySelectorAll(".challengeButton").forEach((button) => {
@@ -98,6 +103,7 @@ function Main() {
   };
 
   const handleComplete = (idx) => {
+    checkEarthState();
     if (!selectedChallenges.includes(idx)) {
       setSelectedChallenges([...selectedChallenges, idx]);
     }
@@ -124,6 +130,14 @@ function Main() {
     const progress =
       (selectedChallenges.length / storedChallenges.length) * 100;
     return isNaN(progress) ? 0 : progress;
+  };
+
+  const checkEarthState = () => {
+    if (selectedChallenges.length >= 2) {
+      setEarthState(earthHealthy);
+    } else {
+      setEarthState(earthUnhealthy);
+    }
   };
 
   return (
@@ -153,6 +167,7 @@ function Main() {
         label={`${calculateProgress()}% completed`}
         animated
       />
+      <img src={earthState} alt="character" className="img-fluid" />
     </div>
   );
 }
