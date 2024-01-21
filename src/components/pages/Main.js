@@ -7,7 +7,7 @@ import earthUnhealthy from "../../images/earth_unhealthy.gif";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
-  const [complete, setComplete] =useState(false);
+  const [complete, setComplete] = useState(false);
   const [storedChallenges, setStoredChallenges] = useState(
     JSON.parse(localStorage.getItem("challenges")) || []
   );
@@ -128,7 +128,7 @@ function Main() {
       return 0;
     }
 
-    const progress = (selectedChallenges.length / storedChallenges.length) * 100;
+    const progress = ((selectedChallenges.length / storedChallenges.length) * 100).toFixed(0);
     if (progress === 100 && !complete) {
       setComplete(true);
     }
@@ -166,12 +166,16 @@ function Main() {
           </button>
         ))}
       </div>
-      <ProgressBar
-        now={calculateProgress()} // Use the dynamic progress value
-        label={`${calculateProgress()}% completed`}
-        animated
-      />
-      <img src={earthState} alt="character" className="img-fluid" />
+      <div className="progressbar">
+        <ProgressBar
+          now={calculateProgress()}
+          label={`${calculateProgress()}%`}
+          variant="success"
+          style={{ height: '20px', borderRadius: '8px' }}
+        />
+
+      </div>
+      <img src={earthState} alt="character" width={500} className="img-fluid" />
     </div>
   );
 }

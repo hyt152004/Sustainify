@@ -28,7 +28,7 @@ function Home() {
               </div>
             </div>
           </Col>
-          <Col md={6} className="d-flex justify-content-center align-items-center">
+          <Col md={6} mdOffset={50} className="d-flex justify-content-center align-items-center">
             <div className="u--pulse">
               <img src={char} alt="character" className="img-fluid" />
             </div>
@@ -40,4 +40,5 @@ function Home() {
 }
 
 export default Home;
+
 
