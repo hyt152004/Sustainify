@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -13,7 +14,11 @@
     "dotenv": "^16.3.2",
     "express": "^4.18.2",
     "mongodb": "^6.3.0",
+=======
+    "bootstrap": "^5.3.2",
+>>>>>>> 5dbe198a446799d1cf51a0f6745ef05da7ee1907
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
