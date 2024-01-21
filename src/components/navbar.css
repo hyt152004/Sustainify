@@ -19,21 +19,23 @@
 
 
 .profile {
-  width: 50px; 
+  width: 65px; 
   height: auto; 
+  padding-top: 5px; 
 }
 
 
 ul {
   list-style: none;
   display: flex;
-  margin: 0;
+  margin: 0 20px;
 }
 
 
 li {
-  margin: 0 15px; 
+  margin: 0 25px; 
 }
+
 
 a {
   text-decoration: none;
