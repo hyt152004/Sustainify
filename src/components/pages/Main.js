@@ -8,6 +8,7 @@ function Main() {
   const [storedChallenges, setStoredChallenges] = useState(
     JSON.parse(localStorage.getItem("challenges")) || []
   );
+
   const [selectedChallenges, setSelectedChallenges] = useState(
     JSON.parse(localStorage.getItem("selectedChallenges")) || []
   );
