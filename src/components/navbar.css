@@ -4,6 +4,7 @@
     padding: 5px;
     background-color: #dacece;
     color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
   
 .profile {
@@ -25,3 +26,8 @@
   list-style: none;
 
   }
+  
+.logo {
+   margin-left: 450px;
+  }
+  
