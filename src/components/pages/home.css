@@ -1,3 +1,5 @@
+
+
 .homepage {
     display: flex;
     justify-content: center;
@@ -17,6 +19,7 @@
   }
   
   .title {
+    font-family: 'Times New Roman', Times, serif;
     font-size: 50px;
     text-align: center;
     padding-bottom: 20px;
