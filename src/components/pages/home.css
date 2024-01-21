@@ -30,6 +30,7 @@
   }
   
   .character {
+    margin: 0px;
     flex: 1;
     padding-left: 150px;
   }
