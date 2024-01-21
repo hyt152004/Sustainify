@@ -25,7 +25,7 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button onClick={handleRegister}>Register</button>
+            <button>Register</button>
         </div>
     );
 }
