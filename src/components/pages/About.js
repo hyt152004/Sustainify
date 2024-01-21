@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./about.css";
 import nature from "../../images/earthnature.jpg";
+import earthMelting from "../../images/earth_melting.gif";
 
 function About() {
   return (

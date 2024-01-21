@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import "./main.css";
+import { v4 as uuidv4 } from "uuid";
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
-  const [completedChallenges, setCompletedChallenges] = useState([]);
-  const [storedChallenges, setStoredChallenges] = useState([]);
+  const [storedChallenges, setStoredChallenges] = useState(
+    JSON.parse(localStorage.getItem("challenges")) || []
+  );
+  const [selectedChallenges, setSelectedChallenges] = useState(
+    JSON.parse(localStorage.getItem("selectedChallenges")) || []
+  );
+
+  useEffect(() => {
+    const storedChallengesData = localStorage.getItem("challenges");
+    if (storedChallengesData) {
+      try {
+        setStoredChallenges(JSON.parse(storedChallengesData));
+      } catch (error) {
+        console.error("Error parsing storedChallengesData:", error);
+      }
+    }
+
+    const selectedChallengesData = localStorage.getItem("selectedChallenges");
+    if (selectedChallengesData) {
+      try {
+        setSelectedChallenges(JSON.parse(selectedChallengesData));
+      } catch (error) {
+        console.error("Error parsing selectedChallengesData:", error);
+      }
+    }
+  }, []);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
-  useEffect(() => {
-    // Retrieve challenges from localStorage on component mount
-    const storedChallenges = JSON.parse(localStorage.getItem("storedChallenges")) || [];
-    setStoredChallenges(storedChallenges);
-
-    // Retrieve completed challenges from localStorage on component mount
-    const completedChallenges = JSON.parse(localStorage.getItem("completedChallenges")) || [];
-    setCompletedChallenges(completedChallenges);
-  }, []);
 
   async function callopenAIAPI() {
     setChallengesButton(true);
+
     challengesButtonTimer();
     const APIBody = {
       model: "gpt-3.5-turbo",
@@ -53,19 +70,18 @@ function Main() {
         .split(/\d+\.\s+/)
         .filter((item) => item.trim().length > 0);
 
+      localStorage.setItem("challenges", JSON.stringify(newChallenges));
       setStoredChallenges(newChallenges);
+      // Reset selected challenges and update localStorage
+      setSelectedChallenges([]);
+      localStorage.setItem("selectedChallenges", "[]");
 
-      // Update completion state based on stored challenges
-      const updatedCompletedChallenges = storedChallenges.map((_, idx) =>
-        completedChallenges.includes(idx)
-      );
-      setCompletedChallenges(updatedCompletedChallenges);
-
-      // Store challenges and completion states in localStorage
-      localStorage.setItem("storedChallenges", JSON.stringify(newChallenges));
-      localStorage.setItem("completedChallenges", JSON.stringify(updatedCompletedChallenges));
+      // Reset the styles of buttons
+      document.querySelectorAll(".challengeButton").forEach((button) => {
+        button.classList.remove("selected");
+      });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -81,29 +97,23 @@ function Main() {
   };
 
   const handleComplete = (idx) => {
-    setCompletedChallenges((prevCompleted) => {
-      const updatedCompleted = [...prevCompleted];
-      updatedCompleted[idx] = !updatedCompleted[idx]; // Toggle completion state
-      return updatedCompleted;
-    });
+    if (!selectedChallenges.includes(idx)) {
+      setSelectedChallenges([...selectedChallenges, idx]);
+    }
+  };
+
+  const dynamicClassName = (idx) => {
+    return selectedChallenges.includes(idx)
+      ? `challengeButton selected`
+      : `challengeButton`;
   };
 
   useEffect(() => {
-    // Update local storage when completedChallenges change
     localStorage.setItem(
-      "completedChallenges",
-      JSON.stringify(completedChallenges)
+      "selectedChallenges",
+      JSON.stringify(selectedChallenges)
     );
-  }, [completedChallenges]);
-
-  const calculateProgress = () => {
-    if (storedChallenges.length === 0) {
-      return 0;
-    }
-    const progress =
-      (completedChallenges.filter((isCompleted) => isCompleted).length / storedChallenges.length) * 100;
-    return isNaN(progress) ? 0 : progress;
-  };
+  }, [selectedChallenges]);
 
   return (
     <div className="challengeContainer">
@@ -117,21 +127,21 @@ function Main() {
       <div className="challengeButtonContainer">
         {storedChallenges.map((challenge, idx) => (
           <button
-            key={idx}
-            className={`challengeButton ${
-              completedChallenges[idx] ? "completed" : ""
-            }`}
-            onClick={() => handleComplete(idx)}
+            key={uuidv4()}
+            className={dynamicClassName(idx)}
+            onClick={() => {
+              handleComplete(idx);
+            }}
           >
             {challenge}
           </button>
         ))}
       </div>
-      <ProgressBar
+      {/* <ProgressBar
         now={calculateProgress()}
         label={`${completedChallenges.filter((isCompleted) => isCompleted).length}% completed`}
         animated
-      />
+      /> */}
     </div>
   );
 }
