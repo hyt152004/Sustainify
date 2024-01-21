@@ -17,18 +17,25 @@
   }
   
   .title {
-    padding-left: 30px;
-    font-family: 'Times New Roman', Times, serif;
+   
+    font-family: Arial, Helvetica, sans-serif; 
     font-size: 50px;
     text-align: center;
     margin-top: 40px;
     padding-bottom: 30px;
+    width: 500px;
+  }
+
+  .titleUL {
+    font-weight: 550;
+    
   }
   
   .Buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-content: center;
   }
   
   
@@ -36,6 +43,7 @@
     margin: 0px;
     flex: 1;
     padding-left: 150px;
+
   }
 
   .button {
@@ -113,12 +121,17 @@
     }
   }
   
+.emptySpace {
+  width: 150px;
+}
+
   .u--pulse {
-    padding-left: 200px;
-    margin-top: 100px;
+    margin-top: 60px;
+    width: 1000px;
     -webkit-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     -moz-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     -o-animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     animation: pulse 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
   }
+  
   
