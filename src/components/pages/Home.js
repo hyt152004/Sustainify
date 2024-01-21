@@ -14,9 +14,9 @@ function Home() {
           <Col md={6}>
             <div className="leftside">
               <div className="title">
-                <ul>Set your goal,</ul>
-                <ul>Do your work,</ul>
-                <ul>Save the Earth</ul>
+                <ul className="titleUL">Set your goal,</ul>
+                <ul className="titleUL">Do your work,</ul>
+                <ul className="titleUL">Save the Earth</ul>
               </div>
               <div className="Buttons">
                 <Link to="/main" className="button">
