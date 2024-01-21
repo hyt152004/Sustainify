@@ -53,8 +53,7 @@
   transform: scale(1.05);
 }
 
-.challengeButton.completed {
+.challengeButton.selected {
   background-color: black; 
   color: #fff; /* White text for selected button */
 }
-

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
 import "./main.css";
+import { ProgressBar } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 function Main() {
@@ -34,18 +34,18 @@ function Main() {
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
-
   async function callopenAIAPI() {
     setChallengesButton(true);
 
     challengesButtonTimer();
+
     const APIBody = {
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
           content:
-            "give me 3 one setence eco-friendly challenges accomplisable in one day",
+            "give me 3 one sentence eco-friendly challenges accomplishable in one day",
         },
       ],
       temperature: 0.7,
@@ -64,6 +64,7 @@ function Main() {
           body: JSON.stringify(APIBody),
         }
       );
+
       const data = await response.json();
 
       const newChallenges = data.choices[0].message.content
@@ -115,6 +116,16 @@ function Main() {
     );
   }, [selectedChallenges]);
 
+  const calculateProgress = () => {
+    if (storedChallenges.length === 0) {
+      return 0;
+    }
+
+    const progress =
+      (selectedChallenges.length / storedChallenges.length) * 100;
+    return isNaN(progress) ? 0 : progress;
+  };
+
   return (
     <div className="challengeContainer">
       <button
@@ -137,11 +148,11 @@ function Main() {
           </button>
         ))}
       </div>
-      {/* <ProgressBar
-        now={calculateProgress()}
-        label={`${completedChallenges.filter((isCompleted) => isCompleted).length}% completed`}
+      <ProgressBar
+        now={calculateProgress()} // Use the dynamic progress value
+        label={`${calculateProgress()}% completed`}
         animated
-      /> */}
+      />
     </div>
   );
 }
