@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./main.css";
 import { ProgressBar } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import earthHealthy from "../../images/earth_healthy.gif";
+import earthHealthy from "../../images/happyhappy.gif";
 import earthUnhealthy from "../../images/earth_unhealthy.gif";
 
 function Main() {
