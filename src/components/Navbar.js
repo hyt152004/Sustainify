@@ -8,22 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function NavBar() {
   return (
-    // <nav className="nav">
-    //   <Link to="/home" className="site-title">
-    //     <img src={logo} alt="logo" className="profile" />
-    //   </Link>
-    //   <ul>
-    //     <li>
-    //       <Link to="/home">home</Link>
-    //     </li>
-    //     <li>
-    //       <Link to="/about">about</Link>
-    //     </li>
-    //     <li>
-    //       <Link to="/main">main</Link>
-    //     </li>
-    //   </ul>
-    // </nav>
+  
 <Navbar bg="light" data-bs-theme="light">
 <Container class="d-flex justify-content-between align-items-center">
 <Link to="/home" className="site-title me-5">
