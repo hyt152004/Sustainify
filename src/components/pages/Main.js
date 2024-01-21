@@ -3,10 +3,15 @@ import { useState } from "react";
 import "./main.css";
 
 function Main() {
-  const [challengesButton, setChallengesButton] = useState(false);
-  const storedChallenges = JSON.parse(localStorage.getItem("challenges")) || [];
+  const [challenges, setChallenges] = useState([
+    "question1",
+    "question2",
+    "questions3",
+  ]);
 
-  // console.log(JSON.stringify(["question1", "question2"]));
+  const [challengesButton, setChallengesButton] = useState(false);
+  const [selectedChallenges, setSelectedChallenges] = useState([]);
+  const [completedChallenges, setCompletedChallenges] = useState([]);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -14,46 +19,41 @@ function Main() {
     // user will not be able to press the challenges Button
     setChallengesButton(true);
     challengesButtonTimer();
+
     const APIBody = {
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
           content:
-            "give me 3 one setence eco-friendly challenges accomplisable in one day",
+            "give me 3 one sentence eco-friendly challenges accomplishable in one day",
         },
       ],
       temperature: 0.7,
       top_p: 1,
     };
     try {
-      await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + API_KEY,
         },
         body: JSON.stringify(APIBody),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          localStorage.setItem(
-            "challenges",
-            JSON.stringify(
-              data.choices[0].message.content
-                .split(/\d+\.\s+/)
-                .filter((item) => item.trim().length > 0)
-            )
-          );
-        });
+      });
+      const data = await response.json();
+
+      setChallenges(
+        data.choices[0].message.content
+          .split(/\d+\.\s+/)
+          .filter((item) => item.trim().length > 0)
+      );
+      setSelectedChallenges([]); 
     } catch (e) {
       console.log(e);
     }
   }
 
-  // counts to 10 and after setChallengesButton(false)
   const challengesButtonTimer = () => {
     var timer = 10;
     const interval = setInterval(() => {
@@ -65,14 +65,26 @@ function Main() {
     }, 1000);
   };
 
-  const handleRemove = (idx) => {
-    localStorage.setItem(
-      "challenges",
-      JSON.parse(localStorage.getItem("challenges")).filter(
-        (_, index) => index !== idx
-      )
-    );
+  const handleToggleSelect = (idx) => {
+    const isSelected = selectedChallenges.includes(idx);
+    if (isSelected && !completedChallenges.includes(idx)) {
+      // Mark as completed if not already completed
+      setCompletedChallenges([...completedChallenges, idx]);
+    }
+    if (!isSelected) {
+      setSelectedChallenges([...selectedChallenges, idx]);
+    }
   };
+
+  const handleMarkIncomplete = (idx) => {
+    const isSelected = selectedChallenges.includes(idx);
+    if (isSelected) {
+      setSelectedChallenges(selectedChallenges.filter((selectedIdx) => selectedIdx !== idx));
+    } else {
+      setSelectedChallenges([...selectedChallenges, idx]);
+    }
+  };
+
   return (
     <div className="challengeContainer">
       <button
@@ -80,22 +92,26 @@ function Main() {
         disabled={challengesButton}
         onClick={callopenAIAPI}
       >
-        Generate Green Challenges
+        Generate A Motivation Challenge
       </button>
       <div className="challengeButtonContainer">
-        {storedChallenges.map((challenge, idx) => (
-          <button
-            key={idx}
-            className="challengeButton"
-            onClick={() => {
-              handleRemove(idx);
-            }}
-          >
-            {challenge}
-          </button>
+        {challenges.map((challenge, idx) => (
+          <div key={idx} className="challengeButtonContainer">
+            <button
+              className={`challengeButton ${
+                selectedChallenges.includes(idx) ? "selected" : ""
+              } ${completedChallenges.includes(idx) ? "completed" : ""}`}
+              onClick={() => handleToggleSelect(idx)}
+            >
+              {challenge}
+            </button>
+            <button onClick={() => handleMarkIncomplete(idx)}>Mark as Incomplete</button>
+          </div>
         ))}
       </div>
+      <div className="mark-incomplete"></div>
     </div>
   );
 }
+
 export default Main;
