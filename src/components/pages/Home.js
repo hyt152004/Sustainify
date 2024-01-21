@@ -11,7 +11,7 @@ function Home() {
     <Container>
       <div className="homepage">
         <Row>
-          <Col md={6}>
+          <Col md={5}>
             <div className="leftside">
               <div className="title">
                 <ul>Set your goal,</ul>
