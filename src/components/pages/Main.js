@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./main.css";
 import { ProgressBar } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import incomplete from "../../images/earth_melting.gif"
+import completeEarth from "../../images/card2.png"
 
 function Main() {
   const [challengesButton, setChallengesButton] = useState(false);
+  const [complete, setComplete] =useState(false);
   const [storedChallenges, setStoredChallenges] = useState(
     JSON.parse(localStorage.getItem("challenges")) || []
   );
@@ -76,6 +79,7 @@ function Main() {
       // Reset selected challenges and update localStorage
       setSelectedChallenges([]);
       localStorage.setItem("selectedChallenges", "[]");
+      setComplete(false);
 
       // Reset the styles of buttons
       document.querySelectorAll(".challengeButton").forEach((button) => {
@@ -121,8 +125,11 @@ function Main() {
       return 0;
     }
 
-    const progress =
-      (selectedChallenges.length / storedChallenges.length) * 100;
+    const progress = (selectedChallenges.length / storedChallenges.length) * 100;
+    if (progress === 100 && !complete) {
+      setComplete(true);
+    }
+
     return isNaN(progress) ? 0 : progress;
   };
 
@@ -153,6 +160,15 @@ function Main() {
         label={`${calculateProgress()}% completed`}
         animated
       />
+      {complete ? (
+        <div className="gif-earth-complete">
+          <img src={completeEarth} alt="Completed Earth Gif" />
+        </div>
+      ) : (
+        <div className="gif-earth-incomplete">
+          <img src={incomplete}alt="Incomplete Earth Gif" />
+        </div>
+      )}
     </div>
   );
 }
