@@ -12,9 +12,7 @@ function About() {
           Some description text goes here.adjkfakjdfnkandknf
           sadkfknakdfnkjasdnfkjnsafkjndnakfjnksndfkjadnskjnf
           ansdkjfnakjdfnksnfdkajnfkjandksjankjanfkj asdnkjfnsakjfdnkasndfkjands
-          asndkfjanskdjfnskn asndkjfnskdjfnksjdnfkjsdnfksfdnkjsdnfkjsnkfnsdkjf
-          sdfnkjsdnfknafkndkjnwewkjfm,dafn,msdnf,sdfnkjsdnfknafkndkjnwewkjfmasdnfjsnke
-          dsnakjfnkj
+          asndkfj
         </p>
       </div>
       <div className="image-box">
