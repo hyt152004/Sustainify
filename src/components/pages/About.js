@@ -4,14 +4,12 @@ import "./about.css";
 import card1 from "../../images/card1.png"
 import card2 from "../../images/card2.png"
 import card3 from "../../images/card3.png"
-import nature from "../../images/earthnature.jpg";
-import earthMelting from "../../images/earth_melting.gif";
 
 
 function About() {
   return (
     <div className="about">
-        <h1>We are...</h1>
+        <h1>We are Sustainify !</h1>
 
     
       <div className="cards-container">
