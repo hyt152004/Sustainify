@@ -149,7 +149,10 @@ function Main() {
       return 0;
     }
 
-    const progress = ((selectedChallenges.length / storedChallenges.length) * 100).toFixed(0);
+    const progress = (
+      (selectedChallenges.length / storedChallenges.length) *
+      100
+    ).toFixed(0);
     if (progress === 100 && !complete) {
       setComplete(true);
     }
@@ -192,7 +195,7 @@ function Main() {
           now={calculateProgress()}
           label={`${calculateProgress()}%`}
           variant="success"
-          style={{ height: '20px', borderRadius: '8px' }}
+          style={{ height: "20px", borderRadius: "8px" }}
         />
         <ProgressBar
           now={calculatedTo100DaysCompleted()}
@@ -202,6 +205,7 @@ function Main() {
         />
       </div>
       <img src={earthState} alt="character" width={400} className="img-fluid" />
+
     </div>
   );
 }
