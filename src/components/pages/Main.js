@@ -12,7 +12,11 @@ function Main() {
     parseInt(localStorage.getItem("numberOfDaysCompleted")) || 0
   );
   const [storedChallenges, setStoredChallenges] = useState(
-    JSON.parse(localStorage.getItem("challenges")) || []
+    JSON.parse(localStorage.getItem("challenges")) || [
+      "",
+      "Generate New Challenges!",
+      "",
+    ]
   );
   const [selectedChallenges, setSelectedChallenges] = useState(
     JSON.parse(localStorage.getItem("selectedChallenges")) || []
