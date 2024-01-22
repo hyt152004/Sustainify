@@ -1,9 +1,13 @@
 .nav {
-  background-color: #333; 
+  background-color: #333333; 
   padding: 15px 20px; 
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.link {
+  font-weight: 300;
 }
 
 .site-title {

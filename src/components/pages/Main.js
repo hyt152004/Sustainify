@@ -108,13 +108,12 @@ function Main() {
 
   const handleComplete = (idx) => {
     checkEarthState();
-  
+
     if (!selectedChallenges.includes(idx)) {
       setSelectedChallenges([...selectedChallenges, idx]);
-  
+
       // Increase the number of days completed when all 3 challenges are completed
       if (selectedChallenges.length + 1 === 3) {
-  
         // Update the number of days completed (increase by 1)
         setNumberOfDaysCompleted((prevDays) => prevDays + 1);
         localStorage.setItem(
@@ -124,7 +123,6 @@ function Main() {
       }
     }
   };
-  
 
   const calculatedTo100DaysCompleted = () => {
     // Calculate the percentage of days completed out of 100
@@ -201,11 +199,10 @@ function Main() {
           now={calculatedTo100DaysCompleted()}
           label={`${calculatedTo100DaysCompleted()}%`}
           variant="success"
-          style={{ height: '20px', borderRadius: '8px', marginTop: '10px' }}
+          style={{ height: "20px", borderRadius: "8px", marginTop: "10px" }}
         />
       </div>
       <img src={earthState} alt="character" width={400} className="img-fluid" />
-
     </div>
   );
 }
