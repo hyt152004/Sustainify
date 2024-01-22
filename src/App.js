@@ -7,6 +7,7 @@ import Main from "./components/pages/Main";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  document.title = "Sustainify";
   return (
     <Router>
       <div style={{ height: "100vh", overflow: "scroll" }}>
