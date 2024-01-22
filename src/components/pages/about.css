@@ -7,7 +7,7 @@ body {
   overflow: hidden; /* Prevent scrollbar due to gradient animation */
 
   /* Gradient Background Animation */
-  background: linear-gradient(-45deg, #47B64C, #EEFA58, #A5F4FF, #35424A);
+  background: linear-gradient(-45deg, #97D39B, #FFFFFF, #B4C0E6, #D5E7D4);
   background-size: 400% 400%; /* Make the gradient larger to create the animation effect */
   animation: gradientAnimation 15s ease infinite; /* Adjust the duration as needed */
 }
