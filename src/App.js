@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{ height: "100vh", overflow: "scroll" }}>
         <Navbar />
         <div className="container">
           <Routes>

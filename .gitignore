@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .env.REACT_APP_OPENAI_API_KEY
+.vercel
+.env*.local
